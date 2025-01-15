@@ -3,18 +3,10 @@ import PageLayout from "../layouts/PageLayout.astro";
 import { client } from "../lib/contentful";
 import DynamicComponent from "../components/DynamicComponent.astro";
 
-const { slug } = Astro.params;
 let pageEntry;
 
-export function getStaticPaths() {
-  return [
-    {params: {slug: 'platform'}},
-    {params: {slug: 'contact'}},
-  ];
-}
-
 try {
-  pageEntry = await client.getSinglePage(slug);
+  pageEntry = await client.getSinglePage('/');
  } catch (error) {
   return Astro.redirect("/404");
 }

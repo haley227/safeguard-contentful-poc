@@ -11,65 +11,44 @@ const {
 ---
 
 <div id={id} class="hidden md:block">
-  
-    {header && (
-      <div class="flex justify-center mb-10">
-        <h2 class="heading h2 max-w-2xl text-center">{header}</h2>
+  {header && (
+    <div class="flex justify-center mb-10">
+      <h2 class="heading h2 max-w-2xl text-center">{header}</h2>
+    </div>
+  )}
+  <div class="flex flex-col justify-center items-center h-[60vh] mt-0">
+    <div class="w-[80%] h-full rounded-xl overflow-hidden mb-12" style={{  borderWidth: "3px", borderColor: "#322A68", borderRadius: "15px" }}>
+      <div id="iframe-container" class="w-full h-full">
+        <iframe src={navatticUrl} class="w-full h-full" style={{ border: "none" }}></iframe>
+      </div>
+    </div>
+    {(primaryCtaButton || secondaryCtaButton) && (
+      <div class="w-full flex flex-col lg:flex-row justify-center gap-4">
+        {primaryCtaButton && (
+          <div class="flex justify-center">
+            <CTA
+              link={primaryCtaButton.link}
+              openInANewTab={primaryCtaButton.openInANewTab}
+              label={primaryCtaButton.label}
+              backgroundColor={true}
+              fullWidth={true}
+              isSmall={true}
+            />
+          </div>
+        )}
+        {secondaryCtaButton && (
+          <div class="flex justify-center">
+            <CTA
+              link={secondaryCtaButton.link}
+              openInANewTab={secondaryCtaButton.openInANewTab}
+              label={secondaryCtaButton.label}
+              backgroundColor={false}
+              fullWidth={true}
+              isSmall={true}
+            />
+          </div>
+        )}
       </div>
     )}
-    <div class="flex flex-col justify-center items-center h-[60vh] mt-0">
-      <div class="w-[80%] h-full rounded-xl overflow-hidden mb-12" style={{  borderWidth: "3px", borderColor: "#322A68", borderRadius: "15px" }}>
-        <div id="iframe-container" class="w-full h-full"></div>
-      </div>
-      {(primaryCtaButton || secondaryCtaButton) && (
-        <div class="w-full flex flex-col lg:flex-row justify-center gap-4">
-          {primaryCtaButton && (
-            <div class="flex justify-center">
-              <CTA
-                link={primaryCtaButton.link}
-                openInANewTab={primaryCtaButton.openInANewTab}
-                label={primaryCtaButton.label}
-                backgroundColor={true}
-                fullWidth={true}
-                isSmall={true}
-              />
-            </div>
-          )}
-          {secondaryCtaButton && (
-            <div class="flex justify-center">
-              <CTA
-                link={secondaryCtaButton.link}
-                openInANewTab={secondaryCtaButton.openInANewTab}
-                label={secondaryCtaButton.label}
-                backgroundColor={false}
-                fullWidth={true}
-                isSmall={true}
-              />
-            </div>
-          )}
-        </div>
-      )}
-    </div>
-    <script define:vars={{navatticUrl}}>
-      const iframe = document.createElement("iframe");
-      iframe.loading = "lazy";
-      iframe.src = navatticUrl;
-      iframe.style = "border:none;width:100%;height:100%;";
-      iframe.allow = "fullscreen";
-      iframe.id = "navattic-embed";
-      const container = document.getElementById("iframe-container");
-      if (container) {
-        container.appendChild(iframe);
-      } else {
-        console.error("iframe-container element not found");
-      }
-
-      // Cleanup function to remove iframe when component unmounts
-      return () => {
-        const container = document.getElementById("iframe-container");
-        if (container) {
-          container.removeChild(iframe);
-        }
-      };
-  </script>
+  </div>
 </div>
