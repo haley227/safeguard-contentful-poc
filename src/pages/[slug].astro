@@ -28,7 +28,7 @@ try {
         window.contentfulEntry = pageEntry;
     </script>
     <div>
-        {pageEntry.contentCollection.items.map((item: { __typename: unknown; }) => {
+        {pageEntry?.contentCollection && pageEntry.contentCollection.items.map((item: { __typename: unknown; }) => {
             return <DynamicComponent componentName={item.__typename} data={item} />
         })}
     </div>
