@@ -1,0 +1,99 @@
+---
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import CTA from './CTA.astro';
+
+const {
+  breadcrumb,
+  heading,
+  image,
+  mobileImage,
+  overlayImage,
+  imageAlt,
+  subheading,
+  primaryCtaButton,
+  secondaryCtaButton,
+  existingCustomersHeading,
+  existingCustomersLogosCollection,
+} = Astro.props;
+
+---
+<div
+      class={`bg-no-repeat lg:bg-right bg-cover pt-6 md:pb-16 bg-right-top relative`}
+      style={{
+        backgroundImage: `url("${image.url}")`,
+      }}
+      role="img"
+      aria-label={imageAlt}
+    >
+      <div class="grid grid-cols-12 gap-8 xg:mx-0 mx-5 items-center sm:pb-0 pb-20 md:px-20">
+        <div class="col-span-12 lg:col-span-6 float-left z-30 sm:pb-10 md:pb-0">
+          <div class="md:pt-26 pt-0 w-auto">
+            {breadcrumb && (
+              <div class="font-inter md:mb-8 mb-4 md:text-sm md:leading-6 text-[11px] leading-[22px] md:tracking-[0.75px] tracking-[0.25px]  font-semibold text-white">
+                {breadcrumb}
+              </div>
+            )}
+            <div class="lg:-mb-16 xg:max-w-lg md:max-w-md max-w-xs pt-0  lg:pb-10">
+              <h1 class="heading mb-10 h1 text-white">{heading}</h1>
+            </div>
+            <div set:html={documentToHtmlString(subheading.json)} class="font-inter mt-4 mb-6 md:mb-8 lg:mb-0 text-[15px] leading-6 md:text-lg md:leading-8 xg:max-w-[600px] md:max-w-sm max-w-sm font-normal tracking-[0.75px] text-white" 
+             ></div>
+          </div>
+          {(primaryCtaButton || secondaryCtaButton) && (
+            <div class="mt-8 lg:mt-10 w-full lg:flex-row flex-col flex justify-start gap-4">
+              {primaryCtaButton && (
+                <div class="">
+                  <CTA
+                    link={primaryCtaButton.link}
+                    openInANewTab={primaryCtaButton.openInANewTab}
+                    label={primaryCtaButton.label}
+                    backgroundColor={true}
+                    fullWidth={true}
+                    backgroundCustomColorClass={"bg-purple-light"}
+                  />
+                </div>
+              )}
+              {secondaryCtaButton && (
+                <div class="">
+                  <CTA
+                    link={secondaryCtaButton.link}
+                    openInANewTab={secondaryCtaButton.openInANewTab}
+                    label={secondaryCtaButton.label}
+                    backgroundColor={false}
+                    fullWidth={true}
+                    backgroundCustomColorClass={"bg-purple-light"}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+          {existingCustomersHeading && (
+            <p class="text-white font-medium text-md font-inter mt-10 lg:mt-16">
+              {existingCustomersHeading}
+            </p>
+          )}
+          {existingCustomersLogosCollection && existingCustomersLogosCollection.items && (
+            <div class="flex flex-row gap-6 mt-3">
+              {existingCustomersLogosCollection.items.map((logo: { url: any; description: string | null | undefined; }, number: any) => (
+                <img
+                  loading="lazy"
+                  class=" w-auto h-8"
+                  src={`${logo.url}?fm=webp`}
+                  alt={logo.description}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      {overlayImage && (
+        <div class="absolute top-0 right-0 bottom-0 w-1/2 hidden xl:block">
+          <img
+            src={`${overlayImage.url}?fm=webp&w=800`}
+            alt={overlayImage.description || "Overlay image"}
+            class="h-full w-full object-contain object-right"
+            loading="lazy"
+          />
+        </div>
+      )}
+    </div>

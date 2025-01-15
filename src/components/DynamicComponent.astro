@@ -1,0 +1,52 @@
+---
+import ImageHeader from "./contentBlocks/imageHeader.astro";
+import ContentBlockCardsStat from "./contentBlocks/contentBlockCardsStat.astro";
+import HorizontalCardList from "./contentBlocks/horizontalCardList.astro";
+import ContentBlockInteractiveDemo from "./contentBlocks/contentBlockInteractiveDemo.astro";
+import ContentBlockCardsGrid from "./contentBlocks/contentBlockCardsGrid.astro";
+import ContentBlockTabbedContent from "./contentBlocks/contentBlockTabbedContent.astro";
+import ContentBlockTestimonialList from "./contentBlocks/contentBlockTestimonialList.astro";
+const {
+  componentName,
+  data
+} = Astro.props;
+
+---
+
+<div>
+    {componentName == "ContentBlockHeaderImage" && (
+        <ImageHeader
+            {...data}
+        />
+    )}
+    {componentName == 'ContentBlockCardsStat' && (
+        <ContentBlockCardsStat
+            {...data}
+        />
+    )}
+    {componentName == 'ContentBlockHorizontalCardsList' && (
+        <HorizontalCardList
+            {...data}
+        />
+    )}
+    {componentName == 'ContentBlockInteractiveDemo' && (
+        <ContentBlockInteractiveDemo
+            {...data}
+        />
+    )}
+    {componentName == 'ContentBlockCardsGrid' && (
+        <ContentBlockCardsGrid
+            {...data}
+        />
+    )}
+    {componentName == 'ContentBlockTabbedContent' && (
+        <ContentBlockTabbedContent
+            {...data}
+        />
+    )}
+    {componentName == 'ContentBlockTestimonialList' && (
+        <ContentBlockTestimonialList
+            {...data}
+        />
+    )}
+</div>

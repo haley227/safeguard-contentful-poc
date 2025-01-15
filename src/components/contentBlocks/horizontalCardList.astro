@@ -1,0 +1,73 @@
+---
+import CTA from "./CTA.astro";
+
+const {
+  id,
+  eyebrow,
+  headline,
+  subheading,
+  cta,
+  cardsView,
+  cardsCollection
+} = Astro.props;
+
+const CARD_VIEW = {
+  CARD: "card",
+  DIVIDER: "divider",
+};
+
+---
+
+<div id={id} class="px-8 md:px-14">
+    {eyebrow && (
+      <p class="font-inter font-semibold text-[12px] text-am1-main mb-4 text-center">
+        {eyebrow}
+      </p>
+    )}
+    {headline && (
+      <h2 class="font-montserrat text-center text-off-black text-2xl md:text-3xl mb-4 font-semibold mx-auto lg:max-w-[800px]">
+        {headline}
+      </h2>
+    )}
+    {subheading&& (
+      <h2 class="font-inter text-center text-off-black text-md font-normal mt-2 mx-auto max-w-[800px]">
+        {subheading}
+      </h2>
+    )}
+    {cta&& (
+      <div class="mt-4 block text-center">
+        <CTA
+          link={cta.link}
+          openInANewTab={cta.openInANewTab}
+          label={cta.label}
+          backgroundColor={true}
+          isSmall={true}
+        />
+      </div>
+    )}
+    <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 mt-12">
+      {cardsCollection.items.map((card: { id: any; icon: { url: any; description: string | null | undefined; }; heading: unknown; subheading: unknown; }, index: number) => (
+        <div>
+          <div class={`flex-1 p-4 ${cardsView == CARD_VIEW.CARD? "border-bluefade border-2 rounded-2xl" : ""}`}>
+            {card.icon?.url && (
+              <img
+                loading="lazy"
+                class="w-10 h-10 mb-4"
+                src={`${card.icon.url}?fm=webp`}
+                alt={card.icon.description}
+              />
+            )}
+            {card.heading && (
+              <div class="font-montserrat text-md text-off-black font-semibold mb-4">
+                {card.heading}
+              </div>
+            )}
+            {card.subheading && <div class="font-inter text-md">{card.subheading}</div>}
+          </div>
+          {cardsView == CARD_VIEW.DIVIDER && index < cardsCollection.items.length - 1 && (
+            <div class="hidden md:block w-px bg-interface-input"></div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
