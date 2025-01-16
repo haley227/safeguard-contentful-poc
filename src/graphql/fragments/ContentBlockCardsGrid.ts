@@ -10,6 +10,9 @@ export const contentBlockCardsGridFragment = `
     cards: cardsCollection(limit: 6) {
         items {
           ... on ElementCardWithImage {
+            sys {
+              id
+            }
             headline
             subheading
             image {
@@ -19,6 +22,9 @@ export const contentBlockCardsGridFragment = `
             clickDestinationUrl
           }
           ... on ElementCardWithText {
+            sys {
+              id
+            }
             headline
             subheading
             cta {

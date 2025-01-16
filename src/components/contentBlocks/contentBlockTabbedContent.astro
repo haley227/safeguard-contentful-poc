@@ -7,22 +7,22 @@ const {
   subheading,
   cta,
   tabs,
-  config
+  entryID
 } = Astro.props;
 ---
     <div class="md:mx-32 mx-6">
       {eyebrow && (
-        <p class="font-inter font-semibold text-[12px] text-am1-main mb-4 text-center">
+        <p class="font-inter font-semibold text-[12px] text-am1-main mb-4 text-center" data-contentful-field-id="eyebrow" data-contentful-entry-id={entryID}>
           {eyebrow}
         </p>
       )}
       {headline && (
-        <h2 class="font-montserrat text-center text-off-black text-2xl md:text-3xl mb-4 font-semibold mx-auto lg:max-w-[800px]">
+        <h2 class="font-montserrat text-center text-off-black text-2xl md:text-3xl mb-4 font-semibold mx-auto lg:max-w-[800px]" data-contentful-field-id="headline" data-contentful-entry-id={entryID}>
           {headline}
         </h2>
       )}
       {subheading && (
-        <p class="font-inter text-center text-off-black text-md font-normal mt-2 mx-auto max-w-[800px]">
+        <p class="font-inter text-center text-off-black text-md font-normal mt-2 mx-auto max-w-[800px]" data-contentful-field-id="subheading" data-contentful-entry-id={entryID}>
           {subheading}
         </p>
       )}
@@ -34,6 +34,8 @@ const {
             label={cta.label}
             backgroundColor={true}
             isSmall={true}
+            data-contentful-field-id="cta"
+            data-contentful-entry-id={cta?.sys?.id}
           />
         </div>
       )}
@@ -41,11 +43,11 @@ const {
     <div class="bg-white mt-12 rounded-2xl md:mx-32 mx-6">
       <div class="flex flex-row flex-wrap px-16 py-8 md:gap-x-20 gap-x-8 gap-y-6 border-b-2 border-b-interface-input">
         {
-          tabs?.items?.map((tab: { tabName: unknown; }, idx: any) => {
+          tabs?.items?.map((tab: { tabName: unknown; sys: any; }, idx: any) => {
             return (
               <div class="flex flex-row gap-2 items-center cursor-pointer">
                 <div class={`flex w-4 h-4 justify-center items-center bg-bluefade rounded-full`}><div class={`w-1 h-1 bg-off-gray rounded-full`} /></div>
-                <p class={`font-montserrat font-bold text-md text-off-gray`}>{tab.tabName}</p>
+                <p class={`font-montserrat font-bold text-md text-off-gray`} data-contentful-field-id="tabName" data-contentful-entry-id={tab?.sys?.id}>{tab.tabName}</p>
               </div>
             );
           })

@@ -19,16 +19,16 @@ async function apiCall(query: string, variables?: { uri: string; } | undefined) 
 async function getAllPages() {
   const query = `
     {
-        pageTemplateCollection {
-          items {
-            sys {
-              id
-            }
-            pageTitle
-            pageUri
+      pageTemplateCollection {
+        items {
+          sys {
+            id
           }
+          pageTitle
+          pageUri
         }
-      }`;
+      }
+    }`;
   const response = await apiCall(query);
   const json = await response.json()
   return await json.data.pageTemplateCollection.items;

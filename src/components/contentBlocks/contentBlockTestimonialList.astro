@@ -5,6 +5,7 @@ const {
   headline,
   testimonials,
   backgroundColorMode,
+  entryID
 } = Astro.props;
 
 const divBgColor = "bg-bluefade";
@@ -12,7 +13,7 @@ const divBgColor = "bg-bluefade";
 
 <div class={`flex flex-col items-center justify-center relative md:pb-12 ${divBgColor}`}>
     <div class="w-full md:mt-[84px] mt-[100px]">
-      <h5 class="heading h5 text-center">{headline}</h5>
+      <h5 class="heading h5 text-center" data-contentful-field-id="headline" data-contentful-entry-id={entryID}>{headline}</h5>
     </div>
     <div>
       <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:gap-8 md:mt-[-60px] mt-10 md:mx-[85px] mx-0">
@@ -22,6 +23,8 @@ const divBgColor = "bg-bluefade";
                 {testimonial?.testimony && (
                   <div set:html={documentToHtmlString(testimonial?.testimony.json)}
                     class="text-[16px] text-black font-inter leading-6 font-normal"
+                    data-contentful-field-id="testimony"
+                    data-contentful-entry-id={testimonial?.sys?.id}
                   />
                 )}
               </div>
@@ -32,6 +35,8 @@ const divBgColor = "bg-bluefade";
                     alt={testimonial?.imageAlt || ""}
                     width={80}
                     height={80}
+                    data-contentful-field-id="image"
+                    data-contentful-entry-id={testimonial?.sys?.id}
                   />
                 </div>
                 <div class="md:col-start-5 col-start-6 col-end-12">
@@ -45,6 +50,8 @@ const divBgColor = "bg-bluefade";
                       alt={"company logo "}
                       width={80}
                       height={80}
+                      data-contentful-field-id="companyLogo"
+                      data-contentful-entry-id={testimonial?.sys?.id}
                     />
                   </div>
                 </div>

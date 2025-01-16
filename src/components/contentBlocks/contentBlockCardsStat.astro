@@ -19,10 +19,10 @@ const gridColNo = cards?.items?.length;
           return (
             <div class="bg-off-white p-8 flex items-center justify-center flex-col">
               <div class={"w-[140px] h-[140px] rounded-full bg-indigo items-center flex justify-center"}>
-                <h5 class="heading text-[40px]">{card?.stat}</h5>
+                <h5 class="heading text-[40px]" data-contentful-field-id="stat" data-contentful-entry-id={card?.sys?.id}>{card?.stat}</h5>
               </div>
               <div class="md:mt-6 mt-8 text-center">
-                <h3 class="heading text-[24px]">{card?.heading}</h3>
+                <h3 class="heading text-[24px]" data-contentful-field-id="heading" data-contentful-entry-id={card?.sys?.id}>{card?.heading}</h3>
                 <p class="pt-2 font-inter text-[16px] font-normal  text-off-black">{card?.subheading}</p>
               </div>
             </div>

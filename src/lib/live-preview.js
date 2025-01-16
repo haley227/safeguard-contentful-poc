@@ -5,7 +5,11 @@ ContentfulLivePreview.init({ locale: 'en-US', enableLiveUpdates: true, debugMode
 
 const updateEntry = (entry, value) => {
   if (typeof value === 'string') {
-    entry.textContent = value;
+    if (entry.nodeName === 'A') {
+      entry.href = value;
+    } else {
+      entry.textContent = value;
+    }
   } else if (typeof value === 'object' && value.hasOwnProperty('json')) {
     entry.innerHTML = documentToHtmlString(value.json);
   } else if (value.url) {
@@ -24,7 +28,7 @@ const callback = (data) => {
         for (const [subKey, subValue] of Object.entries(value)) {
           const subEntry = document.querySelector(`[data-contentful-entry-id="${value.sys.id}"][data-contentful-field-id="${subKey}"]`);
           if (subEntry) updateEntry(subEntry, subValue);
-        };
+        }
       } else {
         updateEntry(entry, value);
       }

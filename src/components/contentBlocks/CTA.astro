@@ -1,34 +1,38 @@
 ---
 
-const { id, link, openInANewTab, label, backgroundColor, icon, fullWidth = false, backgroundCustomColorClass, isSmall = false } = Astro.props;
+const { id, link, openInANewTab, label, backgroundColor, icon, fullWidth = false, backgroundCustomColorClass, isSmall = false, entryID } = Astro.props;
 ---
 <a href={link}
-        target={openInANewTab ? "_blank" : ""}
-        rel="noreferrer"
+    target={openInANewTab ? "_blank" : ""}
+    rel="noreferrer"
+    aria-label={label}
+    id={id ? id : label}
+    data-contentful-field-id="cta"
+    data-contentful-entry-id={entryID}
+    >
+    <button
         aria-label={label}
-        id={id ? id : label}
-      >
-        <button
-          aria-label={label}
-          class={`px-2 md:font-bold md:text-lg md:leading-8 text-[15px] font-semibold leading-6 tracking-[0.75px] ${backgroundCustomColorClass ?
-            `${backgroundCustomColorClass} hover:bg-amethyst-dark text-white`
-            : backgroundColor
-              ? "bg-amethyst hover:bg-amethyst-dark text-white"
-              : "bg-white text-amethyst hover:bg-amethyst-dark hover:text-white border hover:border-white"
-          }  ${isSmall ? "h-[48px]  rounded-lg" : "md:h-[72px] h-[60px]  rounded-2xl"} ${fullWidth ? "w-full px-4" : (isSmall ? "min-w-[170px] max-w-[200px]" : "lg:min-w-[275px] lg:max-w-[300px] min-w-[228px] max-w-[260px]")}  poppins`}
-        >
-          <div class={`flex flex-1 flex-row justify-center ${icon ? "gap-2" : ""}`}>
-            <div class={`font-inter ${isSmall ? "text-sm" : ""}`}>{label}</div>
-            {icon &&
-              <div class="flex self-center">
-                <img
-                  loading="lazy"
-                  class="w-4 h-4"
-                  src={`${icon.url}?fm=webp`}
-                  alt={icon.description}
-                />
-              </div>
-            }
-          </div>
-        </button>
-      </a>
+        class={`px-2 md:font-bold md:text-lg md:leading-8 text-[15px] font-semibold leading-6 tracking-[0.75px] ${backgroundCustomColorClass ?
+        `${backgroundCustomColorClass} hover:bg-amethyst-dark text-white`
+        : backgroundColor
+            ? "bg-amethyst hover:bg-amethyst-dark text-white"
+            : "bg-white text-amethyst hover:bg-amethyst-dark hover:text-white border hover:border-white"
+        }  ${isSmall ? "h-[48px]  rounded-lg" : "md:h-[72px] h-[60px]  rounded-2xl"} ${fullWidth ? "w-full px-4" : (isSmall ? "min-w-[170px] max-w-[200px]" : "lg:min-w-[275px] lg:max-w-[300px] min-w-[228px] max-w-[260px]")}  poppins`}
+    >
+        <div class={`flex flex-1 flex-row justify-center ${icon ? "gap-2" : ""}`}>
+        <div class={`font-inter ${isSmall ? "text-sm" : ""}`}>{label}</div>
+        {icon &&
+            <div class="flex self-center">
+            <img
+                loading="lazy"
+                class="w-4 h-4"
+                src={`${icon.url}?fm=webp`}
+                alt={icon.description}
+                data-contentful-field-id="icon"
+                data-contentful-entry-id={icon?.sys?.id}
+            />
+            </div>
+        }
+        </div>
+    </button>
+    </a>

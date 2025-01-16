@@ -11,6 +11,9 @@ export const contentBlockContactUsAndTestimonials = `
           json
         }
         form {
+          sys {
+            id
+          }
           formLanguage
           dataSource
           tfValue
@@ -22,6 +25,9 @@ export const contentBlockContactUsAndTestimonials = `
       }
       testimonials: testimonialsCollection(limit: 5) {
         items {
+          sys {
+            id
+          }
           headline
           testimony {
             json

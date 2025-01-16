@@ -12,6 +12,9 @@ export const contentBlockTabbedContentFragment = `
       bgColor
       tabs: tabsCollection(limit: 10) {
         items {
+          sys {
+            id
+          }
           __typename
           ...on ElementServiceTab {
             tabName

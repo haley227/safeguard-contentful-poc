@@ -13,6 +13,9 @@ export const contentBlockHorizontalCardsListFragment = `
         cardsView
         cardsCollection {
             items {
+                sys {
+                    id
+                }
                 id
                 icon {
                     url

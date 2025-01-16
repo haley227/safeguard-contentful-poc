@@ -4,6 +4,7 @@ const {
   cards,
   backgroundColorMode,
   cardsPerRow,
+  entryID
 } = Astro.props;
 const gridColNo = cardsPerRow;
 const cardBgColor = "bg-interface-input";
@@ -13,7 +14,7 @@ const gridBgColor = "bg-white";
 <div class={`${gridBgColor}`}>
       <div class="justify-center">
         {headline && (
-          <h4 class="heading px-6 h4 text-center lg:max-w-[800px] mx-auto mb-10">
+          <h4 class="heading px-6 h4 text-center lg:max-w-[800px] mx-auto mb-10" data-contentful-field-id="headline" data-contentful-entry-id={entryID}>
             {headline}
           </h4>
         )}
@@ -38,6 +39,8 @@ const gridBgColor = "bg-white";
                         src={card?.image?.url}
                         alt={card?.imageAlt || ""}
                         class="w-full h-full py-4 px-2"
+                        data-contentful-field-id="image"
+                        data-contentful-entry-id={card?.sys?.id}
                       />
                     )}
                   </div>
@@ -47,7 +50,7 @@ const gridBgColor = "bg-white";
                     href={card.cta.link}
                     class="flex gap-1 items-center flex-row mt-6 cursor-pointer no-underline"
                   >
-                    <span class="font-normal text-md text-start">{card.cta.label}</span>
+                    <span class="font-normal text-md text-start" data-contentful-field-id="ctaLabel" data-contentful-entry-id={card?.sys?.id}>{card.cta.label}</span>
                   </a>
                 )}
               </div>
@@ -57,6 +60,8 @@ const gridBgColor = "bg-white";
                 <a
                   href={card.clickDestinationUrl}
                   class={`block no-underline overflow-hidden rounded-xl ${cardBgColor} group-hover:shadow-lg`}
+                  data-contentful-field-id="clickDestinationUrl"
+                  data-contentful-entry-id={card?.sys?.id}
                 >
                   {CardContent}
                 </a>

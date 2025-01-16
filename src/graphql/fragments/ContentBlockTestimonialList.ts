@@ -6,6 +6,9 @@ export const contentBlockTestimonialList = `
         headline
         testimonials: testimonialCardsListCollection(limit: 3) {
             items {
+                sys {
+                    id
+                }
               ... on ElementTestimonialCard {
                 headline
                 testimony {

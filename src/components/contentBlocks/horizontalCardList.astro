@@ -8,7 +8,8 @@ const {
   subheading,
   cta,
   cardsView,
-  cardsCollection
+  cardsCollection,
+  entryID
 } = Astro.props;
 
 const CARD_VIEW = {
@@ -20,23 +21,25 @@ const CARD_VIEW = {
 
 <div id={id} class="px-8 md:px-14">
     {eyebrow && (
-      <p class="font-inter font-semibold text-[12px] text-am1-main mb-4 text-center">
+      <p class="font-inter font-semibold text-[12px] text-am1-main mb-4 text-center" data-contentful-field-id="eyebrow" data-contentful-entry-id={entryID}>
         {eyebrow}
       </p>
     )}
     {headline && (
-      <h2 class="font-montserrat text-center text-off-black text-2xl md:text-3xl mb-4 font-semibold mx-auto lg:max-w-[800px]">
+      <h2 class="font-montserrat text-center text-off-black text-2xl md:text-3xl mb-4 font-semibold mx-auto lg:max-w-[800px]" data-contentful-field-id="headline" data-contentful-entry-id={entryID}>
         {headline}
       </h2>
     )}
     {subheading&& (
-      <h2 class="font-inter text-center text-off-black text-md font-normal mt-2 mx-auto max-w-[800px]">
+      <h2 class="font-inter text-center text-off-black text-md font-normal mt-2 mx-auto max-w-[800px]" data-contentful-field-id="subheading" data-contentful-entry-id={entryID}>
         {subheading}
       </h2>
     )}
     {cta&& (
       <div class="mt-4 block text-center">
         <CTA
+          data-contentful-field-id="cta"
+          data-contentful-entry-id={cta?.sys?.id}
           link={cta.link}
           openInANewTab={cta.openInANewTab}
           label={cta.label}
@@ -46,7 +49,7 @@ const CARD_VIEW = {
       </div>
     )}
     <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 mt-12">
-      {cardsCollection.items.map((card: { id: any; icon: { url: any; description: string | null | undefined; }; heading: unknown; subheading: unknown; }, index: number) => (
+      {cardsCollection.items.map((card: { sys: { id: string; }; id: any; icon: { url: any; description: string | null | undefined; sys: any; }; heading: unknown; subheading: unknown; }, index: number) => (
         <div>
           <div class={`flex-1 p-4 ${cardsView == CARD_VIEW.CARD? "border-bluefade border-2 rounded-2xl" : ""}`}>
             {card.icon?.url && (
@@ -55,14 +58,16 @@ const CARD_VIEW = {
                 class="w-10 h-10 mb-4"
                 src={`${card.icon.url}?fm=webp`}
                 alt={card.icon.description}
+                data-contentful-field-id="icon"
+                data-contentful-entry-id={card?.sys?.id}
               />
             )}
             {card.heading && (
-              <div class="font-montserrat text-md text-off-black font-semibold mb-4">
+              <div class="font-montserrat text-md text-off-black font-semibold mb-4" data-contentful-field-id="heading" data-contentful-entry-id={card?.sys?.id}>
                 {card.heading}
               </div>
             )}
-            {card.subheading && <div class="font-inter text-md">{card.subheading}</div>}
+            {card.subheading && <div class="font-inter text-md" data-contentful-field-id="subheading" data-contentful-entry-id={card?.sys?.id}>{card.subheading}</div>}
           </div>
           {cardsView == CARD_VIEW.DIVIDER && index < cardsCollection.items.length - 1 && (
             <div class="hidden md:block w-px bg-interface-input"></div>

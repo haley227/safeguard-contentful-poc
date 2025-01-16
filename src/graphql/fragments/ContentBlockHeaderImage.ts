@@ -27,6 +27,9 @@ export const headerImageBlockFragment = `
         existingCustomersHeading
         existingCustomersLogosCollection(limit: 5) {
             items {
+                sys {
+                    id
+                }
                 ...image
             }
         }
