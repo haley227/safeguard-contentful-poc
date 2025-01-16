@@ -4,6 +4,7 @@ import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 ContentfulLivePreview.init({ locale: 'en-US', enableLiveUpdates: true, debugMode: true });
 
 const updateEntry = (entry, value) => {
+  console.log('updateEntry', entry, value);
   if (typeof value === 'string') {
     if (entry.nodeName === 'A') {
       entry.href = value;
@@ -25,7 +26,9 @@ const callback = (data) => {
       if (!value || !entry) continue;
 
       if (value.hasOwnProperty('sys')) {
+        console.log('object value', value);
         for (const [subKey, subValue] of Object.entries(value)) {
+          console.log('subKey', subKey, subValue);
           const subEntry = document.querySelector(`[data-contentful-entry-id="${value.sys.id}"][data-contentful-field-id="${subKey}"]`);
           if (subEntry) updateEntry(subEntry, subValue);
         }

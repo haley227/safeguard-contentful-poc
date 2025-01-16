@@ -1,7 +1,8 @@
 ---
 const {
   headline,
-  cards
+  cards,
+  entryID
 } = Astro.props;
 const gridColNo = cards?.items?.length;
 ---
@@ -11,7 +12,7 @@ const gridColNo = cards?.items?.length;
       {
         headline &&
         <div class="md:max-w-[600px] px-6">
-          <h2 class="heading text-[24px] text-center mb-10">{headline}</h2>
+          <h2 class="heading text-[24px] text-center mb-10" data-contentful-field-id="headline" data-contentful-entry-id={entryID}>{headline}</h2>
         </div>
       }
       <div class="flex flex-wrap gap-10">
@@ -23,11 +24,11 @@ const gridColNo = cards?.items?.length;
               </div>
               <div class="md:mt-6 mt-8 text-center">
                 <h3 class="heading text-[24px]" data-contentful-field-id="heading" data-contentful-entry-id={card?.sys?.id}>{card?.heading}</h3>
-                <p class="pt-2 font-inter text-[16px] font-normal  text-off-black">{card?.subheading}</p>
+                <p class="pt-2 font-inter text-[16px] font-normal text-off-black" data-contentful-field-id="subheading" data-contentful-entry-id={card?.sys?.id}>{card?.subheading}</p>
               </div>
             </div>
           );
         })}
       </div>
     </div>
-  </div>
+</div>
