@@ -15,16 +15,18 @@ const updateEntry = (entry, value) => {
 
 const callback = (data) => {
   const collection = data.contentCollection.items;
-  for (const [key, value] of Object.entries(collection)) {
-    console.log(key, value);
-    const entry = document.querySelector(`[data-contentful-field-id="${key}"]`);
-    if (entry) {
-      updateEntry(entry, value);
-    } else if (value.hasOwnProperty('sys')) {
-      for (const [subKey, subValue] of Object.entries(value)) {
-        const subEntry = document.querySelector(`[data-contentful-entry-id="${value.sys.id}"][data-contentful-field-id="${subKey}"]`);
-        if (subEntry) updateEntry(subEntry, subValue);
-      };
+  for (const item of collection) {
+    for (const [key, value] of Object.entries(item)) {
+      console.log(key, value);
+      const entry = document.querySelector(`[data-contentful-field-id="${key}"]`);
+      if (entry) {
+        updateEntry(entry, value);
+      } else if (value.hasOwnProperty('sys')) {
+        for (const [subKey, subValue] of Object.entries(value)) {
+          const subEntry = document.querySelector(`[data-contentful-entry-id="${value.sys.id}"][data-contentful-field-id="${subKey}"]`);
+          if (subEntry) updateEntry(subEntry, subValue);
+        };
+      }
     }
   }
 };
