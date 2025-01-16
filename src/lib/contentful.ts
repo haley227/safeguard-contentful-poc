@@ -4,7 +4,7 @@ const SPACE = import.meta.env.CONTENTFUL_SPACE_ID
 const TOKEN = import.meta.env.CONTENTFUL_DELIVERY_TOKEN
 
 async function apiCall(query: string, variables?: { uri: string; } | undefined) {
-  const fetchUrl = `https://graphql.contentful.com/content/v1/spaces/${SPACE}/environments/master`;
+  const fetchUrl = `https://graphql.contentful.com/content/v1/spaces/${SPACE}/environments/redesign`;
   const options = {
     method: 'POST',
     headers: {
@@ -45,7 +45,7 @@ async function getSinglePage(uri: string) {
   return await json.data.pageTemplateCollection.items[0]
 }
 
-const pages = defineCollection({
+/* const pages = defineCollection({
   loader: async () => {
     const response = await apiCall(pageTemplateQuery, variables);
     const json = await response.json();
@@ -64,6 +64,6 @@ const pages = defineCollection({
     // ...
   }),
 });
-
+*/
 
 export const client = { getAllPages, getSinglePage }

@@ -17,7 +17,6 @@ const callback = (data) => {
   const collection = data.contentCollection.items;
   for (const item of collection) {
     for (const [key, value] of Object.entries(item)) {
-      console.log(key, value);
       const entry = document.querySelector(`[data-contentful-field-id="${key}"]`);
       if (!value || !entry) continue;
 
