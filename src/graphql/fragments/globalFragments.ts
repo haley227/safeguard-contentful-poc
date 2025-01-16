@@ -1,5 +1,8 @@
 export const ctaFragment = `
     fragment cta on Linkcta {
+        sys {
+            id
+        }
         label
         link
         openInANewTab
@@ -13,6 +16,9 @@ export const ctaFragment = `
 
 export const imageFragment = `
     fragment image on Asset {
+        sys {
+            id
+        }
         url
         description
     }
@@ -21,6 +27,9 @@ export const imageFragment = `
 
 export const contentBlockConfig = `
     fragment contentBlockConfig on ContentBlockConfig {
+        sys {
+            id
+        }
         applySettingsOn
         backgroundColor
         paddingTop

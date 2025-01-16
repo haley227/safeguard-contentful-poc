@@ -1,5 +1,8 @@
 export const contentBlockTabbedContentFragment = `
     fragment contentBlockTabbedContent on ContentBlockTabbedContent {
+      sys {
+          id
+      }
       eyebrow
       headline
       tabbedContentSubheading: subheading

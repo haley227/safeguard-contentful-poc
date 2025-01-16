@@ -1,5 +1,8 @@
 export const contentBlockHorizontalCardsListFragment = `
     fragment contentBlockHorizontalCardsList on ContentBlockHorizontalCardsList {
+        sys {
+            id
+        }
         id
         eyebrow
         headline

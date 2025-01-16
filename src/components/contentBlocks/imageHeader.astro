@@ -14,17 +14,20 @@ const {
   secondaryCtaButton,
   existingCustomersHeading,
   existingCustomersLogosCollection,
+  entryID
 } = Astro.props;
 
 ---
 <div
-      class={`bg-no-repeat lg:bg-right bg-cover pt-6 md:pb-16 bg-right-top relative`}
-      style={{
-        backgroundImage: `url("${image.url}")`,
-      }}
-      role="img"
-      aria-label={imageAlt}
-    >
+    class={`bg-no-repeat lg:bg-right bg-cover pt-6 md:pb-16 bg-right-top relative`}
+    style={{
+    backgroundImage: `url("${image.url}")`,
+    }}
+    role="img"
+    aria-label={imageAlt}
+    data-contentful-field-id="contentBlockHeaderImage"
+    data-contentful-entry-id={entryID}
+>
       <div class="grid grid-cols-12 gap-8 xg:mx-0 mx-5 items-center sm:pb-0 pb-20 md:px-20">
         <div class="col-span-12 lg:col-span-6 float-left z-30 sm:pb-10 md:pb-0">
           <div class="md:pt-26 pt-0 w-auto">

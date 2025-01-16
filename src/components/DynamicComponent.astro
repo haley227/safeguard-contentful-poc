@@ -8,6 +8,7 @@ import ContentBlockTabbedContent from "./contentBlocks/contentBlockTabbedContent
 import ContentBlockTestimonialList from "./contentBlocks/contentBlockTestimonialList.astro";
 const {
   componentName,
+  entryID,
   data
 } = Astro.props;
 
@@ -16,36 +17,43 @@ const {
 <div>
     {componentName == "ContentBlockHeaderImage" && (
         <ImageHeader
+            entryID={entryID}
             {...data}
         />
     )}
     {componentName == 'ContentBlockCardsStat' && (
         <ContentBlockCardsStat
+            entryID={entryID}
             {...data}
         />
     )}
     {componentName == 'ContentBlockHorizontalCardsList' && (
         <HorizontalCardList
+            entryID={entryID}
             {...data}
         />
     )}
     {componentName == 'ContentBlockInteractiveDemo' && (
         <ContentBlockInteractiveDemo
+            entryID={entryID}
             {...data}
         />
     )}
     {componentName == 'ContentBlockCardsGrid' && (
         <ContentBlockCardsGrid
+            entryID={entryID}
             {...data}
         />
     )}
     {componentName == 'ContentBlockTabbedContent' && (
         <ContentBlockTabbedContent
+            entryID={entryID}
             {...data}
         />
     )}
     {componentName == 'ContentBlockTestimonialList' && (
         <ContentBlockTestimonialList
+            entryID={entryID}
             {...data}
         />
     )}

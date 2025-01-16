@@ -23,11 +23,12 @@ try {
 <PageLayout>
   <section transition:animate="slide">
     <script define:vars={{ pageEntry }}>
+        console.log(pageEntry);
         window.contentfulEntry = pageEntry;
     </script>
     <div>
-        {pageEntry?.contentCollection && pageEntry.contentCollection.items.map((item: { __typename: unknown; }) => {
-            return <DynamicComponent componentName={item.__typename} data={item} />
+        {pageEntry?.contentCollection && pageEntry.contentCollection.items.map((item: { __typename: unknown; sys: { id: string; }; }) => {
+            return <DynamicComponent componentName={item.__typename} entryID={item.sys?.id} data={item} />
         })}
     </div>
   </section>

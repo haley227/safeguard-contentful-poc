@@ -1,5 +1,8 @@
 export const headerImageBlockFragment = `
     fragment headerImageBlock on ContentBlockHeaderImage {
+        sys {
+            id
+        }
         breadcrumb
         heading
         subheading {

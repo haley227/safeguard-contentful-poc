@@ -1,12 +1,5 @@
-import { headerImageBlockFragment } from '../graphql/fragments/ContentBlockHeaderImage';
-import { contentBlockConfig, ctaFragment } from '../graphql/fragments/globalFragments';
-import { imageFragment } from '../graphql/fragments/globalFragments';
-import { contentBlockCardsStatFragment } from '../graphql/fragments/ContentBlockCardsStat';
-import { contentBlockHorizontalCardsListFragment } from '../graphql/fragments/ContentBlockHorizontalCardsList';
-import { contentBlockInteractiveDemoFragment } from '../graphql/fragments/ContentBlockInteractiveDemo';
-import { contentBlockCardsGridFragment } from '../graphql/fragments/ContentBlockCardsGrid';
-import { contentBlockTabbedContentFragment } from '../graphql/fragments/ContentBlockTabbedContent';
-import { contentBlockTestimonialList } from '../graphql/fragments/ContentBlockTestimonialList';
+import { defineCollection, z } from 'astro:content';
+import { pageTemplateQuery } from '../graphql/pageTemplateQuery';
 const SPACE = import.meta.env.CONTENTFUL_SPACE_ID
 const TOKEN = import.meta.env.CONTENTFUL_DELIVERY_TOKEN
 
@@ -42,65 +35,35 @@ async function getAllPages() {
 }
 
 async function getSinglePage(uri: string) {
-  const query = `
-  ${ctaFragment}
-  ${imageFragment}
-  ${contentBlockConfig}
-  ${headerImageBlockFragment}
-  ${contentBlockCardsStatFragment}
-  ${contentBlockHorizontalCardsListFragment}
-  ${contentBlockInteractiveDemoFragment}
-  ${contentBlockCardsGridFragment}
-  ${contentBlockTabbedContentFragment}
-  ${contentBlockTestimonialList}
-    query ($uri: String!) {
-      pageTemplateCollection(limit: 1, where: {pageUri: $uri}) {
-        items {
-          __typename
-          sys {
-            id
-          }
-          pageTitle
-          pageUri
-          contentCollection(limit: 20) {
-            items {
-              __typename
-              ... on ContentBlockHeaderImage {
-                ...headerImageBlock
-              }
-                ... on ContentBlockCardsStat {
-                ...contentBlockCardsStat
-              }
-              ... on ContentBlockHorizontalCardsList {
-                ...contentBlockHorizontalCardsList
-              }
-              ... on ContentBlockInteractiveDemo {
-                ...contentBlockInteractiveDemo
-              }
-              ... on ContentBlockCardsGrid {
-                ...contentBlockCardsGrid
-              }
-              ... on ContentBlockTabbedContent {
-                ...contentBlockTabbedContent
-              }
-              ... on ContentBlockTestimonialList {
-                ...contentBlockTestimonialList
-              }
-            }
-          }
-        }
-      }
-    }
-    `;
   const variables = {
     uri: uri
   };
 
-  const response = await apiCall(query, variables);
+  const response = await apiCall(pageTemplateQuery, variables);
   const json = await response.json();
 
   return await json.data.pageTemplateCollection.items[0]
 }
+
+const pages = defineCollection({
+  loader: async () => {
+    const response = await apiCall(pageTemplateQuery, variables);
+    const json = await response.json();
+    // Must return an array of entries with an id property, or an object with IDs as keys and entries as values
+    return data.map((country) => ({
+      id: country.cca3,
+      ...country,
+    }));
+  },
+  // optionally define a schema using Zod
+  schema: z.object({
+    id: z.string(),
+    name: z.string(),
+    capital: z.array(z.string()),
+    population: z.number(),
+    // ...
+  }),
+});
 
 
 export const client = { getAllPages, getSinglePage }

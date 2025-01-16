@@ -1,5 +1,8 @@
 export const contentBlockTestimonialList = `
     fragment contentBlockTestimonialList on ContentBlockTestimonialList {
+        sys {
+            id
+        }
         headline
         testimonials: testimonialCardsListCollection(limit: 3) {
             items {

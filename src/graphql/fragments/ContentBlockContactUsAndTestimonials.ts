@@ -1,5 +1,8 @@
 export const contentBlockContactUsAndTestimonials = `
     fragment contentBlockContactUsAndTestimonials on ContentBlockContactUsAndTestimonials {
+      sys {
+        id
+      }
       id
       form {
         id
