@@ -14,7 +14,9 @@ const updateEntry = (entry, value) => {
 }
 
 const callback = (data) => {
-  for (const [key, value] of Object.entries(data)) {
+  const collection = data.contentCollection.items;
+  for (const [key, value] of Object.entries(collection)) {
+    console.log(key, value);
     const entry = document.querySelector(`[data-contentful-field-id="${key}"]`);
     if (entry) {
       updateEntry(entry, value);
