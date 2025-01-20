@@ -34,10 +34,10 @@ const gridBgColor = "bg-white";
                     {card?.subheading}
                   </p>
                   <div id={`card-${index}`} class="flex justify-center w-full">
-                    {card?.image && (
+                    {card?.fields?.image && (
                       <img
-                        src={card?.image?.url}
-                        alt={card?.imageAlt || ""}
+                        src={card?.fields?.image?.fields?.file?.url}
+                        alt={card?.fields?.imageAlt || ""}
                         class="w-full h-full py-4 px-2"
                         data-contentful-field-id="image"
                         data-contentful-entry-id={card?.sys?.id}

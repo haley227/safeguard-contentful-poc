@@ -1,7 +1,15 @@
-import { defineCollection, z } from 'astro:content';
 import { pageTemplateQuery } from '../graphql/pageTemplateQuery';
+import * as contentful from "contentful";
 const SPACE = import.meta.env.CONTENTFUL_SPACE_ID
 const TOKEN = import.meta.env.CONTENTFUL_DELIVERY_TOKEN
+
+export interface PageTemplate {
+  sys: {
+    id: string;
+  };
+  pageTitle: string;
+  pageUri: string;
+}
 
 async function apiCall(query: string, variables?: { uri: string; } | undefined) {
   const fetchUrl = `https://graphql.contentful.com/content/v1/spaces/${SPACE}/environments/redesign`;
@@ -15,6 +23,16 @@ async function apiCall(query: string, variables?: { uri: string; } | undefined) 
   }
   return await fetch(fetchUrl, options)
 }
+
+// Client init
+export const contentfulClient = contentful.createClient({
+  space: import.meta.env.CONTENTFUL_SPACE_ID,
+  environment: 'redesign',
+  accessToken: import.meta.env.DEV
+    ? import.meta.env.CONTENTFUL_PREVIEW_TOKEN
+    : import.meta.env.CONTENTFUL_DELIVERY_TOKEN,
+  host: import.meta.env.DEV ? "preview.contentful.com" : "cdn.contentful.com",
+});
 
 async function getAllPages() {
   const query = `
@@ -44,26 +62,5 @@ async function getSinglePage(uri: string) {
 
   return await json.data.pageTemplateCollection.items[0]
 }
-
-/* const pages = defineCollection({
-  loader: async () => {
-    const response = await apiCall(pageTemplateQuery, variables);
-    const json = await response.json();
-    // Must return an array of entries with an id property, or an object with IDs as keys and entries as values
-    return data.map((country) => ({
-      id: country.cca3,
-      ...country,
-    }));
-  },
-  // optionally define a schema using Zod
-  schema: z.object({
-    id: z.string(),
-    name: z.string(),
-    capital: z.array(z.string()),
-    population: z.number(),
-    // ...
-  }),
-});
-*/
 
 export const client = { getAllPages, getSinglePage }

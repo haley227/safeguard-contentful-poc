@@ -16,15 +16,16 @@ const gridColNo = cards?.items?.length;
         </div>
       }
       <div class="flex flex-wrap gap-10">
-        {cards?.items?.map((card: any, index: number) => {
+        {cards?.map((card: any) => {
+          const { stat, heading, subheading } = card.fields;
           return (
             <div class="bg-off-white p-8 flex items-center justify-center flex-col">
               <div class={"w-[140px] h-[140px] rounded-full bg-indigo items-center flex justify-center"}>
-                <h5 class="heading text-[40px]" data-contentful-field-id="stat" data-contentful-entry-id={card?.sys?.id}>{card?.stat}</h5>
+                <h5 class="heading text-[40px]" data-contentful-field-id="stat" data-contentful-entry-id={card?.sys?.id}>{stat}</h5>
               </div>
               <div class="md:mt-6 mt-8 text-center">
-                <h3 class="heading text-[24px]" data-contentful-field-id="heading" data-contentful-entry-id={card?.sys?.id}>{card?.heading}</h3>
-                <p class="pt-2 font-inter text-[16px] font-normal text-off-black" data-contentful-field-id="subheading" data-contentful-entry-id={card?.sys?.id}>{card?.subheading}</p>
+                <h3 class="heading text-[24px]" data-contentful-field-id="heading" data-contentful-entry-id={card?.sys?.id}>{heading}</h3>
+                <p class="pt-2 font-inter text-[16px] font-normal text-off-black" data-contentful-field-id="subheading" data-contentful-entry-id={card?.sys?.id}>{subheading}</p>
               </div>
             </div>
           );

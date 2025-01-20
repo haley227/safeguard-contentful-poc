@@ -8,7 +8,7 @@ const {
   subheading,
   cta,
   cardsView,
-  cardsCollection,
+  cards,
   entryID
 } = Astro.props;
 
@@ -49,30 +49,32 @@ const CARD_VIEW = {
       </div>
     )}
     <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0 mt-12">
-      {cardsCollection.items.map((card: { sys: { id: string; }; id: any; icon: { url: any; description: string | null | undefined; sys: any; }; heading: unknown; subheading: unknown; }, index: number) => (
+      {cards.map((card: any, index: number) => {
+        const { icon, heading, subheading } = card.fields;
+        return (
         <div>
           <div class={`flex-1 p-4 ${cardsView == CARD_VIEW.CARD? "border-bluefade border-2 rounded-2xl" : ""}`}>
-            {card.icon?.url && (
+            {icon?.fields?.file?.url && (
               <img
                 loading="lazy"
                 class="w-10 h-10 mb-4"
-                src={`${card.icon.url}?fm=webp`}
-                alt={card.icon.description}
+                src={`${icon.fields.file.url}?fm=webp`}
+                alt={icon.fields.description}
                 data-contentful-field-id="icon"
                 data-contentful-entry-id={card?.sys?.id}
               />
             )}
-            {card.heading && (
+            {heading && (
               <div class="font-montserrat text-md text-off-black font-semibold mb-4" data-contentful-field-id="heading" data-contentful-entry-id={card?.sys?.id}>
-                {card.heading}
+                {heading}
               </div>
             )}
-            {card.subheading && <div class="font-inter text-md" data-contentful-field-id="subheading" data-contentful-entry-id={card?.sys?.id}>{card.subheading}</div>}
+            {subheading && <div class="font-inter text-md" data-contentful-field-id="subheading" data-contentful-entry-id={card?.sys?.id}>{card.subheading}</div>}
           </div>
-          {cardsView == CARD_VIEW.DIVIDER && index < cardsCollection.items.length - 1 && (
+          {cardsView == CARD_VIEW.DIVIDER && index < cards.length - 1 && (
             <div class="hidden md:block w-px bg-interface-input"></div>
           )}
         </div>
-      ))}
+      )})}
     </div>
   </div>

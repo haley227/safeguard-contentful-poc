@@ -21,7 +21,7 @@ const {
 <div
     class={`bg-no-repeat lg:bg-right bg-cover pt-6 md:pb-16 bg-right-top relative`}
     style={{
-    backgroundImage: `url("${image.url}")`,
+    backgroundImage: `url("${image.fields.file.url}")`,
     }}
     role="img"
     aria-label={imageAlt}
@@ -47,28 +47,24 @@ const {
               {primaryCtaButton && (
                 <div class="">
                   <CTA
-                    link={primaryCtaButton.link}
-                    openInANewTab={primaryCtaButton.openInANewTab}
-                    label={primaryCtaButton.label}
                     backgroundColor={true}
                     fullWidth={true}
                     backgroundCustomColorClass={"bg-purple-light"}
                     data-contentful-field-id="primaryCtaButton"
                     data-contentful-entry-id={entryID}
+                    {...primaryCtaButton.fields}
                   />
                 </div>
               )}
               {secondaryCtaButton && (
                 <div class="">
                   <CTA
-                    link={secondaryCtaButton.link}
-                    openInANewTab={secondaryCtaButton.openInANewTab}
-                    label={secondaryCtaButton.label}
                     backgroundColor={false}
                     fullWidth={true}
                     backgroundCustomColorClass={"bg-purple-light"}
                     data-contentful-field-id="secondaryCtaButton"
                     data-contentful-entry-id={entryID}
+                    {...secondaryCtaButton.fields}
                   />
                 </div>
               )}
@@ -81,16 +77,19 @@ const {
           )}
           {existingCustomersLogosCollection && existingCustomersLogosCollection.items && (
             <div class="flex flex-row gap-6 mt-3">
-              {existingCustomersLogosCollection.items.map((logo: { url: any; description: string | null | undefined; }, number: any) => (
-                <img
-                  loading="lazy"
-                  class=" w-auto h-8"
-                  src={`${logo.url}?fm=webp`}
-                  alt={logo.description}
+              {existingCustomersLogosCollection.items.map((logo: any) => {
+                const { file, description } = logo.fields;
+                return (
+                  <img
+                    loading="lazy"
+                    class=" w-auto h-8"
+                    src={`${file.url}?fm=webp`}
+                    alt={description}
                   data-contentful-field-id="existingCustomersLogosCollection"
                   data-contentful-entry-id={entryID}
-                />
-              ))}
+                  />
+                );
+              })}
             </div>
           )}
         </div>
@@ -98,8 +97,8 @@ const {
       {overlayImage && (
         <div class="absolute top-0 right-0 bottom-0 w-1/2 hidden xl:block">
           <img
-            src={`${overlayImage.url}?fm=webp&w=800`}
-            alt={overlayImage.description || "Overlay image"}
+            src={`${overlayImage.fields.file.url}?fm=webp&w=800`}
+            alt={overlayImage.fields.description || "Overlay image"}
             class="h-full w-full object-contain object-right"
             loading="lazy"
             data-contentful-field-id="overlayImage"

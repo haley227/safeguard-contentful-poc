@@ -1,0 +1,39 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import DynamicComponent from "../components/DynamicComponent.astro";
+import { getCollection } from "astro:content";
+
+export const getStaticPaths = async () => {
+  const collection = await getCollection('pagesRest');
+
+  if (!collection) return [];
+  return collection.map((page) => ({
+    params: {
+      slug: `${page.data.fields.pageUri}`,
+    },
+    props: {
+      page: page.data.fields,
+    },
+  }));
+};
+
+const { page } = Astro.props;
+// const pageEntry = await client.getSinglePage(page.data.pageUri);
+
+const entries = await getCollection('pagesRest');
+
+if (!page) Astro.redirect("/404");
+---
+
+<PageLayout>
+  <section transition:animate="slide">
+    <script define:vars={{ page, entries }}>
+      window.contentfulEntry = page;
+    </script>
+    <div>
+      {page?.content && page.content.map((contentBlock: any) => {
+        return <DynamicComponent componentName={contentBlock.sys.contentType.sys.id} entryID={contentBlock.sys?.id} data={contentBlock.fields} />
+      })}
+    </div>
+  </section>
+</PageLayout>
